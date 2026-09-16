@@ -1,0 +1,2073 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>CuentaClaro — Calculadora de nómina, finiquito y embargo</title>
+
+<meta name="description"
+content="Calcula tu nómina, salario neto, IRPF, pluses, horas extra, embargo y finiquito. Información y enlaces a fuentes oficiales.">
+
+<meta name="theme-color" content="#2563eb">
+
+<style>
+
+:root{
+--primary:#2563eb;
+--primary-dark:#1d4ed8;
+--primary-light:#eff6ff;
+--background:#f5f7fb;
+--card:#fff;
+--text:#172033;
+--muted:#687386;
+--border:#dfe5ee;
+--success:#15803d;
+--warning:#a16207;
+--danger:#b91c1c;
+--radius:20px;
+--shadow:0 8px 25px rgba(20,35,60,.08);
+}
+
+*{
+box-sizing:border-box;
+}
+
+body{
+margin:0;
+background:var(--background);
+color:var(--text);
+font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+line-height:1.5;
+}
+
+header{
+background:linear-gradient(135deg,#2563eb,#4f8cff);
+color:white;
+padding:30px 18px 75px;
+}
+
+.header{
+max-width:1100px;
+margin:auto;
+}
+
+.logo{
+font-size:30px;
+font-weight:900;
+}
+
+.slogan{
+opacity:.9;
+}
+
+main{
+max-width:1100px;
+margin:-45px auto 60px;
+padding:0 15px;
+}
+
+nav{
+display:flex;
+gap:8px;
+overflow-x:auto;
+padding:10px 0 18px;
+}
+
+nav button{
+border:1px solid var(--border);
+background:white;
+border-radius:999px;
+padding:11px 16px;
+font-weight:700;
+white-space:nowrap;
+cursor:pointer;
+}
+
+nav button.active{
+background:var(--primary);
+color:white;
+border-color:var(--primary);
+}
+
+.card{
+background:white;
+border:1px solid var(--border);
+border-radius:var(--radius);
+padding:22px;
+margin-bottom:18px;
+box-shadow:var(--shadow);
+}
+
+.hero h1{
+font-size:clamp(26px,6vw,40px);
+line-height:1.1;
+margin:0 0 12px;
+}
+
+.hero p{
+color:var(--muted);
+}
+
+.notice{
+background:#fff8df;
+border:1px solid #efd36a;
+border-radius:14px;
+padding:14px;
+color:#654d00;
+margin-top:18px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:15px;
+}
+
+.grid3{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:15px;
+}
+
+label{
+font-weight:700;
+font-size:14px;
+}
+
+label small{
+display:block;
+color:var(--muted);
+font-weight:400;
+margin-top:4px;
+}
+
+input,
+select{
+width:100%;
+padding:12px;
+margin-top:7px;
+border:1px solid var(--border);
+border-radius:12px;
+font-size:16px;
+background:white;
+}
+
+input:focus,
+select:focus{
+outline:3px solid #dbeafe;
+border-color:var(--primary);
+}
+
+.actions{
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+margin-top:20px;
+}
+
+.btn{
+border:0;
+border-radius:13px;
+padding:13px 18px;
+font-weight:800;
+cursor:pointer;
+}
+
+.primary{
+background:var(--primary);
+color:white;
+}
+
+.secondary{
+background:#edf2f7;
+color:var(--text);
+}
+
+.danger{
+background:#fff0f0;
+color:var(--danger);
+}
+
+.result{
+background:var(--primary-light);
+border:1px solid #bfdbfe;
+border-radius:17px;
+padding:20px;
+margin-top:20px;
+}
+
+.big{
+font-size:38px;
+font-weight:900;
+color:var(--primary);
+}
+
+.result-row{
+display:flex;
+justify-content:space-between;
+gap:15px;
+padding:10px 0;
+border-bottom:1px dashed #cbd5e1;
+}
+
+.result-row:last-child{
+border-bottom:0;
+}
+
+.hidden{
+display:none!important;
+}
+
+.progress{
+display:flex;
+gap:7px;
+margin-bottom:20px;
+}
+
+.progress div{
+height:7px;
+flex:1;
+background:#e2e8f0;
+border-radius:20px;
+}
+
+.progress .active{
+background:var(--primary);
+}
+
+.step{
+display:none;
+}
+
+.step.active{
+display:block;
+}
+
+.ad{
+min-height:100px;
+border:1px dashed #cbd5e1;
+background:#fafcff;
+border-radius:15px;
+display:flex;
+align-items:center;
+justify-content:center;
+color:#8a94a5;
+margin:20px 0;
+font-size:13px;
+}
+
+.ad-label{
+text-align:center;
+}
+
+.official-grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:12px;
+}
+
+.official{
+display:block;
+text-decoration:none;
+color:var(--text);
+background:#f8fafc;
+border:1px solid var(--border);
+border-radius:15px;
+padding:16px;
+transition:.2s;
+}
+
+.official:hover{
+border-color:var(--primary);
+background:#eff6ff;
+transform:translateY(-2px);
+}
+
+.official strong{
+display:block;
+color:var(--primary);
+margin-bottom:4px;
+}
+
+.official span{
+font-size:13px;
+color:var(--muted);
+}
+
+details{
+border:1px solid var(--border);
+border-radius:13px;
+padding:13px;
+margin-top:15px;
+background:#fafbfd;
+}
+
+summary{
+cursor:pointer;
+font-weight:800;
+}
+
+footer{
+max-width:1100px;
+margin:auto;
+padding:0 15px 50px;
+color:var(--muted);
+font-size:14px;
+}
+
+footer a{
+color:var(--primary);
+}
+
+@media(max-width:700px){
+
+.grid,
+.grid3,
+.official-grid{
+grid-template-columns:1fr;
+}
+
+.card{
+padding:17px;
+}
+
+.actions .btn{
+width:100%;
+}
+
+}
+
+@media print{
+
+header,
+nav,
+.actions,
+.ad,
+footer{
+display:none!important;
+}
+
+body{
+background:white;
+}
+
+main{
+margin:0;
+max-width:none;
+}
+
+.card{
+box-shadow:none;
+border:0;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<div class="header">
+
+<div class="logo">
+CuentaClaro
+</div>
+
+<div class="slogan">
+Tus números, claros.
+</div>
+
+</div>
+
+</header>
+
+
+<main>
+
+
+<nav>
+
+<button class="active"
+onclick="mostrar('nomina',this)">
+💶 Nómina
+</button>
+
+<button
+onclick="mostrar('embargo',this)">
+🔒 Embargo
+</button>
+
+<button
+onclick="mostrar('finiquito',this)">
+📄 Finiquito
+</button>
+
+<button
+onclick="mostrar('fuentes',this)">
+📚 Fuentes oficiales
+</button>
+
+<button
+onclick="mostrar('guardados',this)">
+💾 Mis cálculos
+</button>
+
+</nav>
+
+
+<!-- =========================
+     NÓMINA
+========================= -->
+
+<section id="nomina">
+
+
+<div class="card hero">
+
+<h1>
+¿Cuánto voy a cobrar realmente?
+</h1>
+
+<p>
+Calcula una estimación de tu nómina incluyendo salario base,
+pluses, nocturnidad, transporte, horas extra, domingos,
+festivos, bonus, IRPF y cotizaciones.
+</p>
+
+<div class="notice">
+
+⚠️ <strong>Importante:</strong>
+el resultado es orientativo. La nómina real puede variar según
+tu convenio colectivo, contrato, situación personal y normativa vigente.
+
+</div>
+
+</div>
+
+
+<!-- PUBLICIDAD 1 -->
+
+<div class="ad">
+
+<div class="ad-label">
+
+PUBLICIDAD
+
+<br>
+
+<!--
+====================================
+GOOGLE ADSENSE
+====================================
+
+Cuando tengas AdSense aprobado,
+pega aquí el código proporcionado
+por Google.
+
+NO INVENTAR PUB-ID.
+
+Ejemplo:
+
+<script async
+src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=TU-ID"
+crossorigin="anonymous"></script>
+
+<ins class="adsbygoogle"
+style="display:block"
+data-ad-client="TU-ID"
+data-ad-slot="TU-SLOT"
+data-ad-format="auto"
+data-full-width-responsive="true"></ins>
+
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+====================================
+-->
+
+Espacio reservado para AdSense
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="progress">
+
+<div id="bar1" class="active"></div>
+<div id="bar2"></div>
+<div id="bar3"></div>
+<div id="bar4"></div>
+
+</div>
+
+
+<!-- PASO 1 -->
+
+<div id="step1" class="step active">
+
+<h2>
+1️⃣ Datos del trabajo
+</h2>
+
+<div class="grid">
+
+<label>
+Salario base bruto mensual
+<input id="base" type="number" placeholder="1500">
+</label>
+
+<label>
+Pagas
+<select id="pagas">
+
+<option value="12">
+12 pagas
+</option>
+
+<option value="14">
+14 pagas
+</option>
+
+<option value="15">
+15 pagas
+</option>
+
+</select>
+</label>
+
+<label>
+Tipo de contrato
+<select id="contrato">
+
+<option>Indefinido</option>
+<option>Temporal</option>
+<option>Fijo discontinuo</option>
+<option>Otro</option>
+
+</select>
+</label>
+
+<label>
+Jornada
+<select id="jornada">
+
+<option value="100">100%</option>
+<option value="75">75%</option>
+<option value="50">50%</option>
+<option value="25">25%</option>
+
+</select>
+</label>
+
+<label>
+Horas semanales
+<input id="horas" type="number" value="40">
+</label>
+
+<label>
+Categoría profesional
+<input id="categoria" placeholder="Ej. Teleoperador">
+</label>
+
+<label>
+Convenio colectivo
+<input id="convenio"
+placeholder="Ej. Oficinas y despachos">
+</label>
+
+<label>
+Provincia
+<input id="provincia"
+placeholder="Madrid">
+</label>
+
+</div>
+
+<div class="actions">
+
+<button class="btn primary"
+onclick="paso(2)">
+Continuar →
+</button>
+
+</div>
+
+</div>
+
+
+<!-- PASO 2 -->
+
+<div id="step2" class="step">
+
+<h2>
+2️⃣ Pluses y complementos
+</h2>
+
+<div class="grid">
+
+<label>
+Plus convenio
+<input id="plusConvenio" type="number" value="0">
+</label>
+
+<label>
+Antigüedad
+<input id="antiguedadPlus" type="number" value="0">
+</label>
+
+<label>
+Nocturnidad
+<input id="nocturnidad" type="number" value="0">
+</label>
+
+<label>
+Turnicidad
+<input id="turnicidad" type="number" value="0">
+</label>
+
+<label>
+Transporte
+<input id="transporte" type="number" value="0">
+</label>
+
+<label>
+Dietas
+<input id="dietas" type="number" value="0">
+</label>
+
+<label>
+Bonus
+<input id="bonus" type="number" value="0">
+</label>
+
+<label>
+Comisiones
+<input id="comisiones" type="number" value="0">
+</label>
+
+<label>
+Otros pluses
+<input id="otrosPluses" type="number" value="0">
+</label>
+
+<label>
+Salario en especie
+<input id="especie" type="number" value="0">
+</label>
+
+</div>
+
+<div class="actions">
+
+<button class="btn secondary"
+onclick="paso(1)">
+← Atrás
+</button>
+
+<button class="btn primary"
+onclick="paso(3)">
+Continuar →
+</button>
+
+</div>
+
+</div>
+
+
+<!-- PASO 3 -->
+
+<div id="step3" class="step">
+
+<h2>
+3️⃣ Horas y complementos variables
+</h2>
+
+<div class="grid">
+
+<label>
+Horas extraordinarias (€)
+<input id="horasExtra" type="number" value="0">
+</label>
+
+<label>
+Horas complementarias (€)
+<input id="horasComplementarias" type="number" value="0">
+</label>
+
+<label>
+Domingos (€)
+<input id="domingos" type="number" value="0">
+</label>
+
+<label>
+Festivos (€)
+<input id="festivos" type="number" value="0">
+</label>
+
+<label>
+Bonus adicional
+<input id="bonusExtra" type="number" value="0">
+</label>
+
+<label>
+Otros conceptos
+<input id="otros" type="number" value="0">
+</label>
+
+</div>
+
+<div class="actions">
+
+<button class="btn secondary"
+onclick="paso(2)">
+← Atrás
+</button>
+
+<button class="btn primary"
+onclick="paso(4)">
+Continuar →
+</button>
+
+</div>
+
+</div>
+
+
+<!-- PASO 4 -->
+
+<div id="step4" class="step">
+
+<h2>
+4️⃣ IRPF y cotizaciones
+</h2>
+
+<div class="grid">
+
+<label>
+IRPF (%)
+<input id="irpf" type="number" placeholder="2">
+<small>
+Introduce el porcentaje que aparece en tu nómina.
+</small>
+</label>
+
+<label>
+Cotización trabajador (%)
+<input id="ss" type="number" value="6.35">
+</label>
+
+<label>
+Otros descuentos
+<input id="descuentos" type="number" value="0">
+</label>
+
+<label>
+Anticipos
+<input id="anticipos" type="number" value="0">
+</label>
+
+<label>
+Embargo
+<input id="embargo" type="number" value="0">
+</label>
+
+</div>
+
+<div class="actions">
+
+<button class="btn secondary"
+onclick="paso(3)">
+← Atrás
+</button>
+
+<button class="btn primary"
+onclick="calcularNomina()">
+🧮 Calcular
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div id="resultadoNomina"
+class="result hidden">
+</div>
+
+
+<div class="actions">
+
+<button class="btn secondary"
+onclick="window.print()">
+🖨️ Imprimir / PDF
+</button>
+
+<button class="btn secondary"
+onclick="guardar()">
+💾 Guardar cálculo
+</button>
+
+</div>
+
+</div>
+
+
+<!-- PUBLICIDAD 2 -->
+
+<div class="ad">
+
+<div class="ad-label">
+
+PUBLICIDAD
+
+<br><br>
+
+<!-- BLOQUE ADSENSE DE CONTENIDO -->
+
+Espacio publicitario
+
+</div>
+
+</div>
+
+
+</section>
+
+
+<!-- =========================
+     EMBARGO
+========================= -->
+
+<section id="embargo"
+class="hidden">
+
+
+<div class="card hero">
+
+<h1>
+🔒 Calculadora de nómina embargada
+</h1>
+
+<p>
+Introduce tu salario neto y los datos de tu nómina para obtener
+una estimación del importe que podría ser embargado.
+</p>
+
+<div class="notice">
+
+⚠️ El resultado es orientativo.
+El embargo real depende de la resolución, tipo de deuda,
+pagas y normativa aplicable.
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>
+Datos de la nómina
+</h2>
+
+<div class="grid">
+
+<label>
+Neto mensual
+<input id="netoEmbargo"
+type="number"
+placeholder="1600">
+</label>
+
+<label>
+Referencia protegida
+<input id="protegido"
+type="number"
+value="1184">
+</label>
+
+<label>
+Deuda pendiente
+<input id="deuda"
+type="number">
+</label>
+
+<label>
+Pagas
+<select id="pagasEmbargo">
+<option>12</option>
+<option>14</option>
+</select>
+</label>
+
+</div>
+
+<div class="actions">
+
+<button
+class="btn primary"
+onclick="calcularEmbargo()">
+
+Calcular embargo
+
+</button>
+
+<button
+class="btn secondary"
+onclick="window.print()">
+
+PDF
+
+</button>
+
+</div>
+
+<div
+id="resultadoEmbargo"
+class="result hidden">
+</div>
+
+</div>
+
+
+<div class="ad">
+PUBLICIDAD · ESPACIO ADSENSE
+</div>
+
+</section>
+
+
+<!-- =========================
+     FINIQUITO
+========================= -->
+
+<section id="finiquito"
+class="hidden">
+
+
+<div class="card hero">
+
+<h1>
+📄 Calculadora de finiquito
+</h1>
+
+<p>
+Calcula de forma orientativa tu finiquito y, separadamente,
+una posible indemnización.
+</p>
+
+<div class="notice">
+
+⚠️ Finiquito e indemnización son conceptos diferentes.
+Comprueba siempre el convenio y la documentación de la empresa.
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>
+Datos laborales
+</h2>
+
+<div class="grid">
+
+<label>
+Fecha de inicio
+<input id="inicio" type="date">
+</label>
+
+<label>
+Fecha de finalización
+<input id="fin" type="date">
+</label>
+
+<label>
+Salario mensual
+<input id="salarioFin" type="number">
+</label>
+
+<label>
+Salario anual
+<input id="salarioAnual" type="number">
+</label>
+
+<label>
+Vacaciones anuales
+<input id="vacaciones" type="number" value="30">
+</label>
+
+<label>
+Vacaciones disfrutadas
+<input id="vacacionesDisfrutadas" type="number" value="0">
+</label>
+
+<label>
+Días de salario pendientes
+<input id="diasPendientes" type="number" value="0">
+</label>
+
+<label>
+Pagas extra pendientes
+<input id="extrasPendientes" type="number" value="0">
+</label>
+
+<label>
+Tipo de extinción
+<select id="tipoExtincion">
+
+<option value="solo">
+Solo finiquito
+</option>
+
+<option value="procedente">
+Despido procedente
+</option>
+
+<option value="objetivo">
+Despido objetivo
+</option>
+
+<option value="improcedente">
+Despido improcedente
+</option>
+
+<option value="ere">
+ERE / colectivo
+</option>
+
+<option value="temporal">
+Fin de contrato temporal
+</option>
+
+</select>
+</label>
+
+<label>
+Antigüedad (años)
+<input id="anosAntiguedad" type="number" step=".01">
+</label>
+
+<label>
+Días indemnización por año
+<input id="diasPorAno" type="number" step=".01">
+</label>
+
+</div>
+
+<div class="actions">
+
+<button
+class="btn primary"
+onclick="calcularFiniquito()">
+
+Calcular
+
+</button>
+
+<button
+class="btn secondary"
+onclick="window.print()">
+
+PDF
+
+</button>
+
+</div>
+
+<div
+id="resultadoFiniquito"
+class="result hidden">
+</div>
+
+</div>
+
+
+<div class="ad">
+PUBLICIDAD · ESPACIO ADSENSE
+</div>
+
+</section>
+
+
+<!-- =========================
+     FUENTES OFICIALES
+========================= -->
+
+<section id="fuentes"
+class="hidden">
+
+
+<div class="card hero">
+
+<h1>
+📚 Fuentes oficiales
+</h1>
+
+<p>
+CuentaClaro debe servir también para que el usuario pueda comprobar
+la información directamente en las páginas oficiales.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h2>
+🇪🇸 Legislación laboral
+</h2>
+
+<div class="official-grid">
+
+
+<a class="official"
+href="https://www.boe.es/buscar/act.php?id=BOE-A-2015-11430"
+target="_blank"
+rel="noopener noreferrer">
+
+<strong>
+Estatuto de los Trabajadores
+</strong>
+
+<span>
+Texto consolidado del Real Decreto Legislativo 2/2015.
+</span>
+
+</a>
+
+
+<a class="official"
+href="https://www.boe.es/"
+target="_blank"
+rel="noopener noreferrer">
+
+<strong>
+Boletín Oficial del Estado — BOE
+</strong>
+
+<span>
+Consulta leyes, reales decretos y normativa publicada.
+</span>
+
+</a>
+
+
+<a class="official"
+href="https://www.boe.es/biblioteca_juridica/"
+target="_blank"
+rel="noopener noreferrer">
+
+<strong>
+Biblioteca Jurídica Digital del BOE
+</strong>
+
+<span>
+Textos legales y publicaciones jurídicas.
+</span>
+
+</a>
+
+
+<a class="official"
+href="https://www.boe.es/legislacion/"
+target="_blank"
+rel="noopener noreferrer">
+
+<strong>
+Legislación BOE
+</strong>
+
+<span>
+Acceso a la legislación estatal.
+</span>
+
+</a>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>
+💼 SEPE — Empleo y desempleo
+</h2>
+
+<div class="official-grid">
+
+
+<a class="official"
+href="https://www.sepe.es/"
+target="_blank"
+rel="noopener noreferrer">
+
+<strong>
+SEPE
+</strong>
+
+<span>
+Servicio Público de Empleo Estatal.
+</span>
+
+</a>
+
+
+<a class="official"
+href="https://www.sepe.es/HomeSepe/prestaciones-desempleo"
+target="_blank"
+rel="noopener noreferrer">
+
+<strong>
+Prestaciones por desempleo
+</strong>
+
+<span>
+Información sobre prestación contributiva y subsidios.
+</span>
+
+</a>
+
+
+<a class="official"
+href="https://www.sepe.es/HomeSepe/prestaciones-desempleo/prestacion-contributiva.html"
+target="_blank"
+rel="noopener noreferrer">
+
+<strong>
+Prestación contributiva
+</strong>
+
+<span>
+Información oficial sobre el paro.
+</span>
+
+</a>
+
+
+<a class="official"
+href="https://www.sepe.es/HomeSepe/prestaciones-desempleo/subsidios.html"
+target="_blank"
+rel="noopener noreferrer">
+
+<strong>
+Subsidios de desempleo
+</strong>
+
+<span>
+Información oficial sobre subsidios.
+</span>
+
+</a>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>
+💰 Hacienda — IRPF
+</h2>
+
+<div class="official-grid">
+
+
+<a class="official"
+href="https://sede.agenciatributaria.gob.es/"
+target="_blank"
+rel="noopener noreferrer">
+
+<strong>
+Agencia Tributaria
+</strong>
+
+<span>
+Sede electrónica oficial.
+</span>
+
+</a>
+
+
+<a class="official"
+href="https://sede.agenciatributaria.gob.es/Sede/Retenciones.shtml"
+target="_blank"
+rel="noopener noreferrer">
+
+<strong>
+Retenciones IRPF
+</strong>
+
+<span>
+Información y herramientas oficiales sobre retenciones.
+</span>
+
+</a>
+
+
+<a class="official"
+href="https://sede.agenciatributaria.gob.es/Sede/irpf.html"
+target="_blank"
+rel="noopener noreferrer">
+
+<strong>
+IRPF
+</strong>
+
+<span>
+Información oficial sobre el impuesto sobre la renta.
+</span>
+
+</a>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>
+🛡️ Seguridad Social
+</h2>
+
+<div class="official-grid">
+
+
+<a class="official"
+href="https://www.seg-social.es/"
+target="_blank"
+rel="noopener noreferrer">
+
+<strong>
+Seguridad Social
+</strong>
+
+<span>
+Portal oficial de la Seguridad Social.
+</span>
+
+</a>
+
+
+<a class="official"
+href="https://www.seg-social.es/wps/portal/wss/internet/Trabajadores/CotizacionRecaudacionTrabajadores"
+target="_blank"
+rel="noopener noreferrer">
+
+<strong>
+Cotización y recaudación
+</strong>
+
+<span>
+Información sobre cotizaciones de trabajadores.
+</span>
+
+</a>
+
+
+<a class="official"
+href="https://portal.seg-social.gob.es/"
+target="_blank"
+rel="noopener noreferrer">
+
+<strong>
+Importass
+</strong>
+
+<span>
+Portal oficial para trabajadores y autónomos.
+</span>
+
+</a>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>
+📌 Cómo utilizar las fuentes
+</h2>
+
+<p>
+Las calculadoras de CuentaClaro no deben sustituir a las fuentes oficiales.
+Los enlaces anteriores permiten comprobar directamente la información.
+</p>
+
+<p class="muted">
+Cuando cambie una norma, los parámetros de las calculadoras deberán revisarse
+y actualizarse.
+</p>
+
+</div>
+
+
+<!-- PUBLICIDAD -->
+
+<div class="ad">
+
+PUBLICIDAD · ESPACIO ADSENSE
+
+</div>
+
+
+</section>
+
+
+<!-- =========================
+     GUARDADOS
+========================= -->
+
+<section id="guardados"
+class="hidden">
+
+<div class="card">
+
+<h1>
+💾 Mis cálculos
+</h1>
+
+<p class="muted">
+Tus datos se almacenan localmente en este dispositivo.
+</p>
+
+<div id="guardadosContenido">
+
+No tienes cálculos guardados.
+
+</div>
+
+</div>
+
+</section>
+
+
+</main>
+
+
+<footer>
+
+<strong>CuentaClaro</strong> · Tus números, claros.
+
+<br><br>
+
+Las calculadoras proporcionan estimaciones orientativas.
+No constituyen asesoramiento jurídico, fiscal, laboral ni una liquidación oficial.
+
+<br><br>
+
+Fuentes oficiales:
+<a href="https://www.boe.es/"
+target="_blank">
+BOE
+</a>
+·
+<a href="https://www.sepe.es/"
+target="_blank">
+SEPE
+</a>
+·
+<a href="https://sede.agenciatributaria.gob.es/"
+target="_blank">
+Agencia Tributaria
+</a>
+·
+<a href="https://www.seg-social.es/"
+target="_blank">
+Seguridad Social
+</a>
+
+</footer>
+
+
+<script>
+
+
+/* =========================
+   NAVEGACIÓN
+========================= */
+
+function mostrar(id,boton){
+
+document.querySelectorAll("main section")
+.forEach(s=>s.classList.add("hidden"));
+
+document.getElementById(id)
+.classList.remove("hidden");
+
+document.querySelectorAll("nav button")
+.forEach(b=>b.classList.remove("active"));
+
+boton.classList.add("active");
+
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
+
+}
+
+
+/* =========================
+   PASOS NÓMINA
+========================= */
+
+function paso(numero){
+
+document.querySelectorAll(".step")
+.forEach(s=>s.classList.remove("active"));
+
+document.getElementById("step"+numero)
+.classList.add("active");
+
+for(let i=1;i<=4;i++){
+
+const barra=
+document.getElementById("bar"+i);
+
+if(i<=numero)
+barra.classList.add("active");
+else
+barra.classList.remove("active");
+
+}
+
+}
+
+
+/* =========================
+   OBTENER NÚMERO
+========================= */
+
+function n(id){
+
+return parseFloat(
+document.getElementById(id)?.value
+)||0;
+
+}
+
+
+/* =========================
+   EUROS
+========================= */
+
+function euros(valor){
+
+return new Intl.NumberFormat(
+"es-ES",
+{
+style:"currency",
+currency:"EUR"
+}
+).format(valor||0);
+
+}
+
+
+/* =========================
+   NÓMINA
+========================= */
+
+function calcularNomina(){
+
+const base=n("base");
+
+const pluses=
+
+n("plusConvenio")+
+n("antiguedadPlus")+
+n("nocturnidad")+
+n("turnicidad")+
+n("transporte")+
+n("dietas")+
+n("bonus")+
+n("comisiones")+
+n("otrosPluses");
+
+const variables=
+
+n("horasExtra")+
+n("horasComplementarias")+
+n("domingos")+
+n("festivos")+
+n("bonusExtra")+
+n("otros");
+
+const especie=n("especie");
+
+const bruto=
+base+
+pluses+
+variables+
+especie;
+
+const porcentajeIRPF=n("irpf");
+
+const porcentajeSS=n("ss");
+
+const irpf=
+bruto*
+porcentajeIRPF/
+100;
+
+const seguridadSocial=
+bruto*
+porcentajeSS/
+100;
+
+const descuentos=
+n("descuentos")+
+n("anticipos")+
+n("embargo");
+
+const neto=
+bruto-
+irpf-
+seguridadSocial-
+descuentos;
+
+const pagas=
+parseInt(
+document.getElementById("pagas").value
+);
+
+const brutoAnual=
+bruto*pagas;
+
+const resultado=
+document.getElementById(
+"resultadoNomina"
+);
+
+resultado.classList.remove("hidden");
+
+resultado.innerHTML=`
+
+<h2>
+💶 Resultado estimado
+</h2>
+
+<div class="big">
+${euros(neto)}
+</div>
+
+<p>
+<strong>Neto mensual estimado</strong>
+</p>
+
+<div class="result-row">
+<span>Salario base</span>
+<strong>${euros(base)}</strong>
+</div>
+
+<div class="result-row">
+<span>Pluses</span>
+<strong>${euros(pluses)}</strong>
+</div>
+
+<div class="result-row">
+<span>Horas y variables</span>
+<strong>${euros(variables)}</strong>
+</div>
+
+<div class="result-row">
+<span>Salario en especie</span>
+<strong>${euros(especie)}</strong>
+</div>
+
+<div class="result-row">
+<span>Bruto mensual</span>
+<strong>${euros(bruto)}</strong>
+</div>
+
+<div class="result-row">
+<span>Seguridad Social (${porcentajeSS}%)</span>
+<strong>-${euros(seguridadSocial)}</strong>
+</div>
+
+<div class="result-row">
+<span>IRPF (${porcentajeIRPF}%)</span>
+<strong>-${euros(irpf)}</strong>
+</div>
+
+<div class="result-row">
+<span>Otros descuentos</span>
+<strong>-${euros(descuentos)}</strong>
+</div>
+
+<div class="result-row">
+<span>Bruto anual aproximado</span>
+<strong>${euros(brutoAnual)}</strong>
+</div>
+
+<details>
+
+<summary>
+🔎 Ver explicación
+</summary>
+
+<p>
+La calculadora suma los conceptos introducidos y resta
+las retenciones y descuentos que hayas indicado.
+</p>
+
+<p>
+El tratamiento real de cada concepto puede variar.
+</p>
+
+</details>
+
+<div class="notice">
+
+⚠️ Este resultado es una estimación y no constituye una nómina oficial.
+
+</div>
+
+`;
+
+}
+
+
+/* =========================
+   EMBARGO
+========================= */
+
+function calcularEmbargo(){
+
+const neto=n("netoEmbargo");
+
+const protegido=n("protegido");
+
+if(neto<=0){
+
+alert("Introduce el salario neto.");
+
+return;
+
+}
+
+const exceso=
+Math.max(
+0,
+neto-protegido
+);
+
+let embargo=0;
+
+let restante=exceso;
+
+
+/*
+Escala simplificada orientativa.
+
+Debe actualizarse conforme a la normativa
+antes de utilizarse como cálculo jurídico.
+*/
+
+const tramos=[
+.30,
+.50,
+.60,
+.75,
+.90
+];
+
+for(
+let i=0;
+i<tramos.length && restante>0;
+i++
+){
+
+const tramo=
+Math.min(
+restante,
+protegido
+);
+
+embargo+=
+tramo*
+tramos[i];
+
+restante-=tramo;
+
+}
+
+const queda=
+neto-embargo;
+
+const resultado=
+document.getElementById(
+"resultadoEmbargo"
+);
+
+resultado.classList.remove("hidden");
+
+resultado.innerHTML=`
+
+<h2>
+🔒 Embargo estimado
+</h2>
+
+<div class="big">
+${euros(embargo)}
+</div>
+
+<div class="result-row">
+<span>Neto antes del embargo</span>
+<strong>${euros(neto)}</strong>
+</div>
+
+<div class="result-row">
+<span>Referencia protegida</span>
+<strong>${euros(protegido)}</strong>
+</div>
+
+<div class="result-row">
+<span>Embargo estimado</span>
+<strong>${euros(embargo)}</strong>
+</div>
+
+<div class="result-row">
+<span>Importe restante aproximado</span>
+<strong>${euros(queda)}</strong>
+</div>
+
+<div class="notice">
+
+⚠️ Estimación.
+La cantidad oficial puede variar según el tipo de deuda,
+la resolución y la normativa aplicable.
+
+</div>
+
+`;
+
+}
+
+
+/* =========================
+   FINIQUITO
+========================= */
+
+function calcularFiniquito(){
+
+const salario=n("salarioFin");
+
+let anual=n("salarioAnual");
+
+if(anual<=0)
+anual=salario*12;
+
+const diario=
+salario/30;
+
+const dias=
+n("diasPendientes");
+
+const salarioPendiente=
+diario*dias;
+
+const vacaciones=
+n("vacaciones");
+
+const disfrutadas=
+n("vacacionesDisfrutadas");
+
+const pendientes=
+Math.max(
+0,
+vacaciones-disfrutadas
+);
+
+const importeVacaciones=
+diario*pendientes;
+
+const extras=
+n("extrasPendientes");
+
+const finiquito=
+salarioPendiente+
+importeVacaciones+
+extras;
+
+const antiguedad=
+n("anosAntiguedad");
+
+const diasAno=
+n("diasPorAno");
+
+const indemnizacion=
+(
+anual/
+365
+)*
+diasAno*
+antiguedad;
+
+const total=
+finiquito+
+indemnizacion;
+
+const resultado=
+document.getElementById(
+"resultadoFiniquito"
+);
+
+resultado.classList.remove("hidden");
+
+resultado.innerHTML=`
+
+<h2>
+📄 Resultado estimado
+</h2>
+
+<div class="big">
+${euros(total)}
+</div>
+
+<h3>
+Finiquito
+</h3>
+
+<div class="result-row">
+<span>Salario pendiente</span>
+<strong>${euros(salarioPendiente)}</strong>
+</div>
+
+<div class="result-row">
+<span>Vacaciones pendientes</span>
+<strong>${euros(importeVacaciones)}</strong>
+</div>
+
+<div class="result-row">
+<span>Pagas extra pendientes</span>
+<strong>${euros(extras)}</strong>
+</div>
+
+<div class="result-row">
+<span>Total finiquito</span>
+<strong>${euros(finiquito)}</strong>
+</div>
+
+<h3>
+Indemnización orientativa
+</h3>
+
+<div class="result-row">
+<span>Antigüedad</span>
+<strong>${antiguedad} años</strong>
+</div>
+
+<div class="result-row">
+<span>Días por año introducidos</span>
+<strong>${diasAno}</strong>
+</div>
+
+<div class="result-row">
+<span>Indemnización</span>
+<strong>${euros(indemnizacion)}</strong>
+</div>
+
+<div class="notice">
+
+⚠️ El cálculo de indemnización requiere comprobar
+el supuesto legal concreto. Introducir un número de días
+por año no significa que ese régimen sea necesariamente
+el aplicable a tu caso.
+
+</div>
+
+`;
+
+}
+
+
+/* =========================
+   GUARDAR
+========================= */
+
+function guardar(){
+
+const datos={};
+
+document
+.querySelectorAll(
+"#nomina input,#nomina select"
+)
+.forEach(e=>{
+datos[e.id]=e.value;
+});
+
+localStorage.setItem(
+"cuentaclaro",
+JSON.stringify(datos)
+);
+
+alert(
+"Tu cálculo se ha guardado en este dispositivo."
+);
+
+}
+
+
+/* =========================
+   RECUPERAR
+========================= */
+
+window.addEventListener(
+"DOMContentLoaded",
+()=>{
+
+const guardado=
+localStorage.getItem(
+"cuentaclaro"
+);
+
+if(!guardado)
+return;
+
+try{
+
+const datos=
+JSON.parse(guardado);
+
+Object.entries(datos)
+.forEach(([id,valor])=>{
+
+const elemento=
+document.getElementById(id);
+
+if(elemento)
+elemento.value=valor;
+
+});
+
+}catch(e){}
+
+}
+);
+
+</script>
+
+</body>
+</html>
