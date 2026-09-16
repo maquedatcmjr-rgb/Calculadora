@@ -1,0 +1,2179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#2563eb">
+<meta name="description" content="CuentaClaro - Calcula tu nómina, embargo, finiquito e indemnización de forma sencilla y orientativa.">
+
+<title>CuentaClaro — Tus números, claros</title>
+
+<style>
+:root{
+    --primary:#2563eb;
+    --primary-dark:#1d4ed8;
+    --secondary:#eff6ff;
+    --background:#f5f7fb;
+    --card:#ffffff;
+    --text:#172033;
+    --muted:#687386;
+    --border:#dfe5ee;
+    --success:#15803d;
+    --warning:#a16207;
+    --danger:#b91c1c;
+    --radius:20px;
+    --shadow:0 8px 25px rgba(20,35,60,.08);
+}
+
+*{
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    margin:0;
+    background:var(--background);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+    line-height:1.5;
+}
+
+header{
+    background:linear-gradient(135deg,#2563eb,#4f8cff);
+    color:white;
+    padding:28px 18px 70px;
+}
+
+.header-content{
+    max-width:1050px;
+    margin:auto;
+}
+
+.logo{
+    font-size:28px;
+    font-weight:800;
+}
+
+.slogan{
+    opacity:.92;
+    margin-top:3px;
+}
+
+main{
+    max-width:1050px;
+    margin:-42px auto 60px;
+    padding:0 15px;
+}
+
+.navigation{
+    display:flex;
+    gap:8px;
+    overflow-x:auto;
+    padding:10px 0 18px;
+}
+
+.navigation button{
+    border:1px solid var(--border);
+    background:white;
+    color:var(--text);
+    border-radius:999px;
+    padding:11px 16px;
+    white-space:nowrap;
+    font-weight:700;
+}
+
+.navigation button.active{
+    background:var(--primary);
+    color:white;
+    border-color:var(--primary);
+}
+
+.card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:22px;
+    margin-bottom:18px;
+    box-shadow:var(--shadow);
+}
+
+.hero h1{
+    font-size:clamp(25px,6vw,38px);
+    line-height:1.15;
+    margin:0 0 10px;
+}
+
+.hero p{
+    color:var(--muted);
+    margin:0;
+}
+
+.notice{
+    background:#fff8df;
+    border:1px solid #f2d477;
+    color:#654d00;
+    border-radius:14px;
+    padding:14px;
+    margin-top:18px;
+}
+
+.section-title{
+    margin:0 0 15px;
+    font-size:20px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+}
+
+.grid3{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+}
+
+label{
+    display:block;
+    font-weight:700;
+    font-size:14px;
+}
+
+label small{
+    display:block;
+    color:var(--muted);
+    font-weight:400;
+    margin-top:4px;
+}
+
+input,
+select{
+    width:100%;
+    margin-top:7px;
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:12px;
+    font-size:16px;
+    background:white;
+    color:var(--text);
+}
+
+input:focus,
+select:focus{
+    outline:3px solid #dbeafe;
+    border-color:var(--primary);
+}
+
+.checkbox{
+    display:flex;
+    gap:10px;
+    align-items:center;
+}
+
+.checkbox input{
+    width:auto;
+    margin:0;
+}
+
+.actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:20px;
+}
+
+.btn{
+    border:0;
+    border-radius:13px;
+    padding:13px 18px;
+    font-weight:800;
+    font-size:15px;
+}
+
+.btn-primary{
+    background:var(--primary);
+    color:white;
+}
+
+.btn-primary:hover{
+    background:var(--primary-dark);
+}
+
+.btn-secondary{
+    background:#edf2f7;
+    color:var(--text);
+}
+
+.btn-danger{
+    background:#fff0f0;
+    color:var(--danger);
+}
+
+.result{
+    margin-top:20px;
+    background:var(--secondary);
+    border:1px solid #bfdbfe;
+    border-radius:17px;
+    padding:20px;
+}
+
+.result h2{
+    margin-top:0;
+}
+
+.big-result{
+    font-size:36px;
+    font-weight:900;
+    color:var(--primary);
+}
+
+.result-row{
+    display:flex;
+    justify-content:space-between;
+    gap:20px;
+    border-bottom:1px dashed #cbd5e1;
+    padding:10px 0;
+}
+
+.result-row:last-child{
+    border-bottom:0;
+}
+
+.result-total{
+    font-size:20px;
+    font-weight:900;
+}
+
+.muted{
+    color:var(--muted);
+}
+
+.warning{
+    color:var(--warning);
+}
+
+.success{
+    color:var(--success);
+}
+
+.hidden{
+    display:none!important;
+}
+
+.step{
+    display:none;
+}
+
+.step.active{
+    display:block;
+}
+
+.progress{
+    display:flex;
+    gap:7px;
+    margin-bottom:20px;
+}
+
+.progress-item{
+    height:7px;
+    flex:1;
+    background:#e2e8f0;
+    border-radius:10px;
+}
+
+.progress-item.active{
+    background:var(--primary);
+}
+
+.ad{
+    min-height:90px;
+    border:1px dashed #cbd5e1;
+    background:#fafcff;
+    border-radius:15px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#8a94a5;
+    margin:18px 0;
+}
+
+details{
+    border:1px solid var(--border);
+    border-radius:13px;
+    padding:12px 14px;
+    margin-top:12px;
+    background:#fafbfd;
+}
+
+summary{
+    cursor:pointer;
+    font-weight:800;
+}
+
+footer{
+    max-width:1050px;
+    margin:auto;
+    padding:0 15px 50px;
+    color:var(--muted);
+    font-size:14px;
+}
+
+footer a{
+    color:var(--primary);
+}
+
+@media(max-width:700px){
+
+    .grid,
+    .grid3{
+        grid-template-columns:1fr;
+    }
+
+    .card{
+        padding:17px;
+    }
+
+    .actions .btn{
+        width:100%;
+    }
+
+    .result-row{
+        align-items:flex-start;
+    }
+}
+
+@media print{
+
+    header,
+    .navigation,
+    .actions,
+    .ad,
+    footer,
+    .no-print{
+        display:none!important;
+    }
+
+    body{
+        background:white;
+    }
+
+    main{
+        margin:0;
+        max-width:none;
+    }
+
+    .card{
+        box-shadow:none;
+        border:0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="header-content">
+    <div class="logo">CuentaClaro</div>
+    <div class="slogan">Tus números, claros.</div>
+</div>
+</header>
+
+<main>
+
+<nav class="navigation no-print">
+
+<button class="active" onclick="mostrar('nomina',this)">
+💶 Nómina
+</button>
+
+<button onclick="mostrar('embargo',this)">
+🔒 Nómina embargada
+</button>
+
+<button onclick="mostrar('finiquito',this)">
+📄 Finiquito
+</button>
+
+<button onclick="mostrar('guardados',this)">
+💾 Mis cálculos
+</button>
+
+</nav>
+
+
+<!-- ============================= -->
+<!-- NOMINA -->
+<!-- ============================= -->
+
+<section id="nomina" class="seccion">
+
+<div class="card hero">
+
+<h1>Calcula cuánto puedes ganar</h1>
+
+<p>
+Introduce tu salario y añade todos los conceptos que formen parte de tu nómina:
+pluses, nocturnidad, horas extra, domingos, festivos, bonus, transporte,
+salario en especie, IRPF y cotizaciones.
+</p>
+
+<div class="notice">
+⚠️ <strong>Resultado orientativo:</strong>
+CuentaClaro realiza una estimación. La nómina real puede variar según tu convenio,
+situación personal, contrato, empresa y normativa vigente.
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="progress">
+<div class="progress-item active" id="p1"></div>
+<div class="progress-item" id="p2"></div>
+<div class="progress-item" id="p3"></div>
+<div class="progress-item" id="p4"></div>
+</div>
+
+
+<!-- PASO 1 -->
+
+<div class="step active" id="nominaStep1">
+
+<h2 class="section-title">
+1. Datos de tu trabajo
+</h2>
+
+<div class="grid">
+
+<label>
+Salario base bruto mensual (€)
+<input id="salarioBase" type="number" min="0" step="0.01" placeholder="1500">
+</label>
+
+<label>
+Tipo de contrato
+<select id="tipoContrato">
+<option>Indefinido</option>
+<option>Temporal</option>
+<option>Fijo discontinuo</option>
+<option>Formación</option>
+<option>Otro</option>
+</select>
+</label>
+
+<label>
+Jornada
+<select id="jornada">
+<option value="100">100% — Jornada completa</option>
+<option value="90">90%</option>
+<option value="80">80%</option>
+<option value="75">75%</option>
+<option value="50">50%</option>
+<option value="25">25%</option>
+</select>
+</label>
+
+<label>
+Horas semanales
+<input id="horasSemanales" type="number" value="40" step="0.5">
+</label>
+
+<label>
+Pagas al año
+<select id="pagas">
+<option value="12">12 — Extras prorrateadas</option>
+<option value="14">14 — Dos pagas extra</option>
+<option value="15">15</option>
+<option value="16">16</option>
+</select>
+</label>
+
+<label>
+Categoría profesional
+<input id="categoria" placeholder="Ej. Teleoperador">
+</label>
+
+<label>
+Convenio colectivo
+<input id="convenio" placeholder="Ej. Convenio de oficinas y despachos">
+</label>
+
+<label>
+Provincia
+<select id="provincia">
+<option>Madrid</option>
+<option>Barcelona</option>
+<option>Valencia</option>
+<option>Sevilla</option>
+<option>Otra</option>
+</select>
+</label>
+
+</div>
+
+<div class="actions">
+
+<button class="btn btn-primary"
+onclick="siguienteNomina(2)">
+Continuar →
+</button>
+
+<button class="btn btn-secondary"
+onclick="rellenarEjemplo()">
+Rellenar ejemplo
+</button>
+
+</div>
+
+</div>
+
+
+<!-- PASO 2 -->
+
+<div class="step" id="nominaStep2">
+
+<h2 class="section-title">
+2. Pluses y complementos
+</h2>
+
+<p class="muted">
+Introduce únicamente los conceptos que cobres. Si no tienes alguno,
+déjalo en 0.
+</p>
+
+<div class="grid">
+
+<label>
+Plus de convenio (€)
+<input id="plusConvenio" type="number" min="0" step=".01" value="0">
+</label>
+
+<label>
+Plus de antigüedad (€)
+<input id="plusAntiguedad" type="number" min="0" step=".01" value="0">
+</label>
+
+<label>
+Plus de nocturnidad (€)
+<input id="plusNocturnidad" type="number" min="0" step=".01" value="0">
+</label>
+
+<label>
+Plus de turnicidad (€)
+<input id="plusTurnicidad" type="number" min="0" step=".01" value="0">
+</label>
+
+<label>
+Plus de transporte (€)
+<input id="plusTransporte" type="number" min="0" step=".01" value="0">
+</label>
+
+<label>
+Dietas (€)
+<input id="dietas" type="number" min="0" step=".01" value="0">
+</label>
+
+<label>
+Otros pluses (€)
+<input id="otrosPluses" type="number" min="0" step=".01" value="0">
+</label>
+
+<label>
+Bonus / incentivos (€)
+<input id="bonus" type="number" min="0" step=".01" value="0">
+</label>
+
+<label>
+Comisiones (€)
+<input id="comisiones" type="number" min="0" step=".01" value="0">
+</label>
+
+<label>
+Salario en especie (€)
+<input id="salarioEspecie" type="number" min="0" step=".01" value="0">
+<small>Ej.: seguro, vehículo, tarjeta, alojamiento, etc.</small>
+</label>
+
+</div>
+
+<div class="actions">
+
+<button class="btn btn-secondary"
+onclick="siguienteNomina(1)">
+← Atrás
+</button>
+
+<button class="btn btn-primary"
+onclick="siguienteNomina(3)">
+Continuar →
+</button>
+
+</div>
+
+</div>
+
+
+<!-- PASO 3 -->
+
+<div class="step" id="nominaStep3">
+
+<h2 class="section-title">
+3. Horas, domingos y festivos
+</h2>
+
+<div class="grid">
+
+<label>
+Horas extra (€)
+<input id="horasExtra" type="number" min="0" step=".01" value="0">
+</label>
+
+<label>
+Horas complementarias (€)
+<input id="horasComplementarias" type="number" min="0" step=".01" value="0">
+</label>
+
+<label>
+Domingos (€)
+<input id="domingos" type="number" min="0" step=".01" value="0">
+</label>
+
+<label>
+Festivos (€)
+<input id="festivos" type="number" min="0" step=".01" value="0">
+</label>
+
+<label>
+Noches trabajadas
+<input id="noches" type="number" min="0" step="1" value="0">
+</label>
+
+<label>
+Horas extra realizadas
+<input id="numeroHorasExtra" type="number" min="0" step=".5" value="0">
+</label>
+
+<label>
+Precio aproximado hora extra (€)
+<input id="precioHoraExtra" type="number" min="0" step=".01" value="0">
+</label>
+
+<label>
+Otros conceptos (€)
+<input id="otrosConceptos" type="number" min="0" step=".01" value="0">
+</label>
+
+</div>
+
+<details>
+
+<summary>
+💡 ¿No sabes cuánto cobrarías por horas extra?
+</summary>
+
+<p>
+Si conoces el valor de una hora según tu convenio, introdúcelo.
+Si no lo sabes, puedes dejarlo a cero y utilizar posteriormente la información
+de tu convenio para completar el cálculo.
+</p>
+
+</details>
+
+<div class="actions">
+
+<button class="btn btn-secondary"
+onclick="siguienteNomina(2)">
+← Atrás
+</button>
+
+<button class="btn btn-primary"
+onclick="siguienteNomina(4)">
+Continuar →
+</button>
+
+</div>
+
+</div>
+
+
+<!-- PASO 4 -->
+
+<div class="step" id="nominaStep4">
+
+<h2 class="section-title">
+4. IRPF, cotizaciones y descuentos
+</h2>
+
+<div class="grid">
+
+<label>
+IRPF (%)
+<input id="irpf" type="number" min="0" max="60" step=".01" placeholder="Ej. 2">
+<small>
+Introduce el porcentaje que aparece en tu nómina.
+</small>
+</label>
+
+<label>
+Cotización trabajador (%)
+<input id="cotizacion" type="number" min="0" max="30" step=".01" value="6.35">
+<small>
+Editable para adaptar la estimación.
+</small>
+</label>
+
+<label>
+Otros descuentos (€)
+<input id="otrosDescuentos" type="number" min="0" step=".01" value="0">
+</label>
+
+<label>
+Anticipos (€)
+<input id="anticipos" type="number" min="0" step=".01" value="0">
+</label>
+
+<label>
+Embargo mensual (€)
+<input id="embargoNomina" type="number" min="0" step=".01" value="0">
+</label>
+
+<label>
+Otros conceptos deducibles (€)
+<input id="otrosDeducibles" type="number" min="0" step=".01" value="0">
+</label>
+
+</div>
+
+<div class="notice">
+<strong>Consejo:</strong>
+si tienes una nómina anterior, utiliza exactamente los porcentajes y conceptos
+que aparecen en ella para obtener una estimación más cercana.
+</div>
+
+<div class="actions">
+
+<button class="btn btn-secondary"
+onclick="siguienteNomina(3)">
+← Atrás
+</button>
+
+<button class="btn btn-primary"
+onclick="calcularNomina()">
+🧮 Calcular nómina
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div id="resultadoNomina" class="result hidden"></div>
+
+<div class="actions no-print">
+
+<button class="btn btn-secondary"
+onclick="window.print()">
+🖨️ Imprimir / guardar PDF
+</button>
+
+<button class="btn btn-secondary"
+onclick="guardarNomina()">
+💾 Guardar cálculo
+</button>
+
+</div>
+
+</div>
+
+
+<div class="ad">
+ESPACIO PUBLICITARIO · Google AdSense
+</div>
+
+</section>
+
+
+<!-- ============================= -->
+<!-- EMBARGO -->
+<!-- ============================= -->
+
+<section id="embargo" class="seccion hidden">
+
+<div class="card hero">
+
+<h1>🔒 Calculadora de nómina embargada</h1>
+
+<p>
+Introduce los datos de tu nómina para obtener una estimación de cuánto podría
+quedar protegido y cuánto podría ser objeto de embargo.
+</p>
+
+<div class="notice">
+⚠️ El resultado es orientativo. El embargo real depende de la deuda,
+la resolución, el tipo de ingreso, las pagas y la normativa aplicable.
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2 class="section-title">
+Datos de tu nómina
+</h2>
+
+<div class="grid">
+
+<label>
+Neto mensual antes del embargo (€)
+<input id="embargoNeto" type="number" min="0" step=".01" placeholder="1600">
+</label>
+
+<label>
+Pagas anuales
+<select id="embargoPagas">
+<option value="12">12</option>
+<option value="14">14</option>
+</select>
+</label>
+
+<label>
+Referencia mensual protegida (€)
+<input id="referenciaProtegida" type="number" value="1184" step=".01">
+<small>
+Valor editable para actualizarlo según la normativa vigente.
+</small>
+</label>
+
+<label>
+Deuda pendiente (€)
+<input id="deudaPendiente" type="number" min="0" step=".01">
+</label>
+
+<label>
+¿Tienes otras deducciones?
+<select id="otrasDeduccionesEmbargo">
+<option value="no">No</option>
+<option value="si">Sí</option>
+</select>
+</label>
+
+<label>
+Otras deducciones (€)
+<input id="deduccionesEmbargo" type="number" min="0" step=".01" value="0">
+</label>
+
+</div>
+
+<div class="actions">
+
+<button class="btn btn-primary"
+onclick="calcularEmbargo()">
+🔍 Calcular embargo
+</button>
+
+<button class="btn btn-secondary"
+onclick="window.print()">
+🖨️ PDF
+</button>
+
+</div>
+
+<div id="resultadoEmbargo" class="result hidden"></div>
+
+</div>
+
+<div class="card">
+
+<h2 class="section-title">
+¿Cómo funciona?
+</h2>
+
+<p>
+CuentaClaro separa el importe protegido del importe que supera esa referencia
+y aplica una escala orientativa por tramos.
+</p>
+
+<p class="muted">
+La normativa y las excepciones deben revisarse y actualizarse antes de utilizar
+esta herramienta como cálculo jurídico.
+</p>
+
+</div>
+
+</section>
+
+
+<!-- ============================= -->
+<!-- FINIQUITO -->
+<!-- ============================= -->
+
+<section id="finiquito" class="seccion hidden">
+
+<div class="card hero">
+
+<h1>📄 Calculadora de finiquito</h1>
+
+<p>
+Calcula de forma orientativa el dinero pendiente al finalizar una relación laboral
+y, por separado, una posible indemnización.
+</p>
+
+<div class="notice">
+⚠️ <strong>Finiquito e indemnización no son lo mismo.</strong>
+El resultado depende de las fechas, salario regulador, vacaciones, pagas,
+causa de extinción y convenio aplicable.
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2 class="section-title">
+1. Datos de la relación laboral
+</h2>
+
+<div class="grid">
+
+<label>
+Fecha de inicio
+<input id="fechaInicio" type="date">
+</label>
+
+<label>
+Fecha de finalización
+<input id="fechaFin" type="date">
+</label>
+
+<label>
+Salario bruto mensual (€)
+<input id="salarioFiniquito" type="number" min="0" step=".01">
+</label>
+
+<label>
+Salario bruto anual (€)
+<input id="salarioAnualFiniquito" type="number" min="0" step=".01">
+</label>
+
+<label>
+Pagas al año
+<select id="pagasFiniquito">
+<option value="12">12</option>
+<option value="14">14</option>
+</select>
+</label>
+
+<label>
+Días de vacaciones anuales
+<input id="vacacionesAnuales" type="number" value="30" step=".01">
+</label>
+
+<label>
+Vacaciones ya disfrutadas
+<input id="vacacionesDisfrutadas" type="number" value="0" step=".01">
+</label>
+
+<label>
+Días de salario pendientes
+<input id="diasSalarioPendiente" type="number" value="0" step=".01">
+</label>
+
+<label>
+Pagas extra pendientes (€)
+<input id="pagasPendientes" type="number" value="0" step=".01">
+</label>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2 class="section-title">
+2. Tipo de extinción
+</h2>
+
+<div class="grid">
+
+<label>
+Tipo
+<select id="tipoExtincion">
+<option value="finiquito">Solo finiquito</option>
+<option value="procedente">Despido procedente</option>
+<option value="objetivo">Despido objetivo</option>
+<option value="improcedente">Despido improcedente</option>
+<option value="ere">ERE / despido colectivo</option>
+<option value="finContrato">Fin de contrato temporal</option>
+</select>
+</label>
+
+<label>
+Antigüedad en años
+<input id="antiguedad" type="number" min="0" step=".001">
+</label>
+
+<label>
+Días de indemnización por año
+<input id="diasIndemnizacion" type="number" min="0" step=".01">
+<small>
+Editable para introducir el régimen que corresponda al supuesto.
+</small>
+</label>
+
+<label>
+Límite / tope de indemnización (€)
+<input id="topeIndemnizacion" type="number" min="0" step=".01">
+<small>
+Opcional.
+</small>
+</label>
+
+</div>
+
+<div class="actions">
+
+<button class="btn btn-primary"
+onclick="calcularFiniquito()">
+📄 Calcular finiquito
+</button>
+
+<button class="btn btn-secondary"
+onclick="window.print()">
+🖨️ Imprimir / PDF
+</button>
+
+</div>
+
+<div id="resultadoFiniquito" class="result hidden"></div>
+
+</div>
+
+</section>
+
+
+<!-- ============================= -->
+<!-- GUARDADOS -->
+<!-- ============================= -->
+
+<section id="guardados" class="seccion hidden">
+
+<div class="card">
+
+<h1>💾 Mis cálculos</h1>
+
+<p class="muted">
+Los datos se guardan solamente en este dispositivo utilizando almacenamiento local.
+No necesitas crear una cuenta.
+</p>
+
+<div id="listaGuardados">
+<p class="muted">
+Todavía no tienes cálculos guardados.
+</p>
+</div>
+
+<div class="actions">
+
+<button class="btn btn-secondary"
+onclick="exportarDatos()">
+⬇️ Exportar datos
+</button>
+
+<button class="btn btn-danger"
+onclick="borrarDatos()">
+🗑️ Borrar datos
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+</main>
+
+
+<footer>
+
+<strong>CuentaClaro</strong> · Tus números, claros.
+
+<br><br>
+
+Los resultados mostrados son estimaciones y no constituyen una nómina,
+liquidación, asesoramiento laboral o cálculo oficial.
+
+<br><br>
+
+Antes de tomar decisiones, comprueba los datos de tu nómina,
+convenio colectivo y normativa vigente.
+
+</footer>
+
+
+<script>
+
+/* =========================================
+   NAVEGACIÓN
+========================================= */
+
+function mostrar(id,boton){
+
+    document.querySelectorAll(".seccion")
+    .forEach(s => s.classList.add("hidden"));
+
+    document.getElementById(id)
+    .classList.remove("hidden");
+
+    document.querySelectorAll(".navigation button")
+    .forEach(b => b.classList.remove("active"));
+
+    boton.classList.add("active");
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+    if(id==="guardados"){
+        cargarGuardados();
+    }
+}
+
+
+/* =========================================
+   UTILIDADES
+========================================= */
+
+function numero(id){
+
+    const elemento=document.getElementById(id);
+
+    if(!elemento) return 0;
+
+    return parseFloat(elemento.value)||0;
+}
+
+
+function euros(valor){
+
+    return new Intl.NumberFormat(
+        "es-ES",
+        {
+            style:"currency",
+            currency:"EUR"
+        }
+    ).format(valor||0);
+
+}
+
+
+function escapar(texto){
+
+    return String(texto||"")
+    .replace(/[&<>"']/g,function(c){
+
+        return {
+            "&":"&amp;",
+            "<":"&lt;",
+            ">":"&gt;",
+            '"':"&quot;",
+            "'":"&#039;"
+        }[c];
+
+    });
+
+}
+
+
+/* =========================================
+   NÓMINA POR FASES
+========================================= */
+
+function siguienteNomina(paso){
+
+    document.querySelectorAll(".step")
+    .forEach(s => s.classList.remove("active"));
+
+    document.getElementById(
+        "nominaStep"+paso
+    ).classList.add("active");
+
+
+    for(let i=1;i<=4;i++){
+
+        const barra=document.getElementById("p"+i);
+
+        if(i<=paso){
+            barra.classList.add("active");
+        }else{
+            barra.classList.remove("active");
+        }
+
+    }
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+}
+
+
+/* =========================================
+   CALCULAR NÓMINA
+========================================= */
+
+function calcularNomina(){
+
+    const base=numero("salarioBase");
+
+    const pluses=
+
+        numero("plusConvenio")+
+        numero("plusAntiguedad")+
+        numero("plusNocturnidad")+
+        numero("plusTurnicidad")+
+        numero("plusTransporte")+
+        numero("dietas")+
+        numero("otrosPluses")+
+        numero("bonus")+
+        numero("comisiones");
+
+    const horas=
+
+        numero("horasExtra")+
+        numero("horasComplementarias")+
+        numero("domingos")+
+        numero("festivos")+
+        numero("otrosConceptos");
+
+
+    const especie=numero("salarioEspecie");
+
+    const bruto=
+
+        base+
+        pluses+
+        horas+
+        especie;
+
+
+    const irpfPorcentaje=numero("irpf");
+
+    const cotizacionPorcentaje=numero("cotizacion");
+
+
+    const irpf=
+
+        bruto*
+        irpfPorcentaje/
+        100;
+
+
+    const cotizacion=
+
+        bruto*
+        cotizacionPorcentaje/
+        100;
+
+
+    const descuentos=
+
+        numero("otrosDescuentos")+
+        numero("anticipos")+
+        numero("embargoNomina")+
+        numero("otrosDeducibles");
+
+
+    const neto=
+
+        bruto-
+        irpf-
+        cotizacion-
+        descuentos;
+
+
+    const pagas=
+
+        parseInt(
+            document.getElementById("pagas").value
+        );
+
+
+    const brutoAnual=
+
+        bruto*pagas;
+
+
+    const netoAnual=
+
+        neto*pagas;
+
+
+    const resultado=
+
+    document.getElementById(
+        "resultadoNomina"
+    );
+
+
+    resultado.classList.remove("hidden");
+
+
+    resultado.innerHTML=`
+
+        <h2>💶 Tu nómina estimada</h2>
+
+        <div class="big-result">
+            ${euros(neto)}
+        </div>
+
+        <p class="muted">
+            Neto mensual estimado.
+        </p>
+
+
+        <div class="result-row">
+            <span>Salario base</span>
+            <strong>${euros(base)}</strong>
+        </div>
+
+
+        <div class="result-row">
+            <span>Pluses y complementos</span>
+            <strong>${euros(pluses)}</strong>
+        </div>
+
+
+        <div class="result-row">
+            <span>Horas / domingos / festivos</span>
+            <strong>${euros(horas)}</strong>
+        </div>
+
+
+        <div class="result-row">
+            <span>Salario en especie</span>
+            <strong>${euros(especie)}</strong>
+        </div>
+
+
+        <div class="result-row">
+            <span>💰 Bruto mensual</span>
+            <strong>${euros(bruto)}</strong>
+        </div>
+
+
+        <div class="result-row">
+            <span>Cotización (${cotizacionPorcentaje}%)</span>
+            <strong>-${euros(cotizacion)}</strong>
+        </div>
+
+
+        <div class="result-row">
+            <span>IRPF (${irpfPorcentaje}%)</span>
+            <strong>-${euros(irpf)}</strong>
+        </div>
+
+
+        <div class="result-row">
+            <span>Otros descuentos</span>
+            <strong>-${euros(descuentos)}</strong>
+        </div>
+
+
+        <div class="result-row">
+            <span>Bruto anual estimado</span>
+            <strong>${euros(brutoAnual)}</strong>
+        </div>
+
+
+        <div class="result-row">
+            <span>Neto anual estimado</span>
+            <strong>${euros(netoAnual)}</strong>
+        </div>
+
+
+        <details>
+
+            <summary>
+                🔎 Ver cómo se ha calculado
+            </summary>
+
+            <p>
+                El bruto estimado se obtiene sumando el salario base,
+                pluses, horas, bonus, complementos y salario en especie
+                introducidos.
+            </p>
+
+            <p>
+                Después se restan las cotizaciones, IRPF y descuentos
+                introducidos.
+            </p>
+
+            <p>
+                Los porcentajes utilizados son los que has indicado.
+            </p>
+
+        </details>
+
+
+        <div class="notice">
+
+            ⚠️ <strong>Estimación:</strong>
+            esta cantidad no sustituye a una nómina real.
+            Algunos conceptos pueden tener un tratamiento diferente
+            a efectos de cotización o fiscalidad.
+
+        </div>
+    `;
+
+}
+
+
+/* =========================================
+   EJEMPLO
+========================================= */
+
+function rellenarEjemplo(){
+
+    const datos={
+
+        salarioBase:1500,
+        horasSemanales:40,
+
+        plusConvenio:80,
+        plusAntiguedad:50,
+        plusNocturnidad:120,
+        plusTurnicidad:40,
+        plusTransporte:60,
+        dietas:0,
+        otrosPluses:30,
+
+        bonus:75,
+        comisiones:0,
+
+        salarioEspecie:0,
+
+        horasExtra:100,
+        horasComplementarias:0,
+        domingos:80,
+        festivos:50,
+
+        noches:5,
+        numeroHorasExtra:5,
+
+        precioHoraExtra:20,
+        otrosConceptos:0,
+
+        irpf:2,
+        cotizacion:6.35,
+
+        otrosDescuentos:0,
+        anticipos:0,
+        embargoNomina:0,
+        otrosDeducibles:0
+
+    };
+
+
+    Object.entries(datos)
+    .forEach(([id,valor])=>{
+
+        const elemento=
+            document.getElementById(id);
+
+        if(elemento){
+            elemento.value=valor;
+        }
+
+    });
+
+
+    calcularNomina();
+
+}
+
+
+/* =========================================
+   EMBARGO
+========================================= */
+
+function calcularEmbargo(){
+
+    const neto=numero("embargoNeto");
+
+    const protegido=
+        numero("referenciaProtegida");
+
+    const deuda=
+        numero("deudaPendiente");
+
+    if(neto<=0){
+
+        alert(
+            "Introduce primero el salario neto."
+        );
+
+        return;
+    }
+
+
+    const exceso=
+        Math.max(
+            0,
+            neto-protegido
+        );
+
+
+    /*
+      Escala orientativa.
+
+      IMPORTANTE:
+      debe revisarse y actualizarse
+      según la normativa aplicable.
+    */
+
+    let restante=exceso;
+
+    let embargo=0;
+
+
+    const tramos=[
+        {limite:protegido,porcentaje:.30},
+        {limite:protegido,porcentaje:.50},
+        {limite:protegido,porcentaje:.60},
+        {limite:protegido,porcentaje:.75},
+        {limite:Infinity,porcentaje:.90}
+    ];
+
+
+    for(
+        let i=0;
+        i<tramos.length && restante>0;
+        i++
+    ){
+
+        const cantidad=
+            Math.min(
+                restante,
+                tramos[i].limite
+            );
+
+        embargo+=
+            cantidad*
+            tramos[i].porcentaje;
+
+        restante-=cantidad;
+
+    }
+
+
+    embargo=Math.min(
+        embargo,
+        neto
+    );
+
+
+    const restanteTrabajador=
+        neto-embargo;
+
+
+    const resultado=
+        document.getElementById(
+            "resultadoEmbargo"
+        );
+
+
+    resultado.classList.remove("hidden");
+
+
+    resultado.innerHTML=`
+
+        <h2>🔒 Resultado orientativo</h2>
+
+        <div class="big-result">
+            ${euros(embargo)}
+        </div>
+
+        <p>
+            Posible importe mensual embargable
+            según los parámetros introducidos.
+        </p>
+
+
+        <div class="result-row">
+            <span>Neto antes del embargo</span>
+            <strong>${euros(neto)}</strong>
+        </div>
+
+
+        <div class="result-row">
+            <span>Importe de referencia protegido</span>
+            <strong>${euros(protegido)}</strong>
+        </div>
+
+
+        <div class="result-row">
+            <span>Exceso sobre referencia</span>
+            <strong>${euros(exceso)}</strong>
+        </div>
+
+
+        <div class="result-row">
+            <span>Embargo estimado</span>
+            <strong>${euros(embargo)}</strong>
+        </div>
+
+
+        <div class="result-row result-total">
+            <span>Te quedarían aproximadamente</span>
+            <strong>${euros(restanteTrabajador)}</strong>
+        </div>
+
+
+        ${
+            deuda>0
+            ?
+            `<div class="result-row">
+                <span>Deuda introducida</span>
+                <strong>${euros(deuda)}</strong>
+            </div>`
+            :
+            ""
+        }
+
+
+        <div class="notice">
+
+            ⚠️ Esta es una estimación.
+            La cantidad real puede variar según la resolución
+            de embargo, pagas extraordinarias, conceptos computables,
+            tipo de deuda y normativa vigente.
+
+        </div>
+    `;
+
+}
+
+
+/* =========================================
+   FINIQUITO
+========================================= */
+
+function calcularFiniquito(){
+
+    const salario=
+        numero("salarioFiniquito");
+
+
+    let salarioAnual=
+        numero("salarioAnualFiniquito");
+
+
+    if(
+        salarioAnual<=0 &&
+        salario>0
+    ){
+
+        salarioAnual=
+            salario*
+            12;
+
+    }
+
+
+    const diasPendientes=
+        numero("diasSalarioPendiente");
+
+
+    const salarioDiario=
+        salario/
+        30;
+
+
+    const salarioPendiente=
+        salarioDiario*
+        diasPendientes;
+
+
+    const vacacionesAnuales=
+        numero("vacacionesAnuales");
+
+
+    const vacacionesDisfrutadas=
+        numero("vacacionesDisfrutadas");
+
+
+    const vacacionesPendientes=
+        Math.max(
+            0,
+            vacacionesAnuales-
+            vacacionesDisfrutadas
+        );
+
+
+    const vacacionesEuros=
+        vacacionesPendientes*
+        salarioDiario;
+
+
+    const pagasPendientes=
+        numero("pagasPendientes");
+
+
+    const tipo=
+        document.getElementById(
+            "tipoExtincion"
+        ).value;
+
+
+    const antiguedad=
+        numero("antiguedad");
+
+
+    const diasIndemnizacion=
+        numero("diasIndemnizacion");
+
+
+    let indemnizacion=0;
+
+
+    if(
+        tipo!=="finiquito" &&
+        diasIndemnizacion>0 &&
+        salarioAnual>0
+    ){
+
+        indemnizacion=
+            (
+                salarioAnual/
+                365
+            )*
+            diasIndemnizacion*
+            antiguedad;
+
+    }
+
+
+    const tope=
+        numero("topeIndemnizacion");
+
+
+    if(
+        tope>0 &&
+        indemnizacion>tope
+    ){
+
+        indemnizacion=
+            tope;
+
+    }
+
+
+    const finiquito=
+
+        salarioPendiente+
+        vacacionesEuros+
+        pagasPendientes;
+
+
+    const total=
+
+        finiquito+
+        indemnizacion;
+
+
+    const resultado=
+        document.getElementById(
+            "resultadoFiniquito"
+        );
+
+
+    resultado.classList.remove("hidden");
+
+
+    resultado.innerHTML=`
+
+        <h2>📄 Resultado estimado</h2>
+
+        <div class="big-result">
+            ${euros(total)}
+        </div>
+
+        <p class="muted">
+            Finiquito + indemnización orientativa.
+        </p>
+
+
+        <h3>Finiquito</h3>
+
+
+        <div class="result-row">
+            <span>Salario pendiente</span>
+            <strong>${euros(salarioPendiente)}</strong>
+        </div>
+
+
+        <div class="result-row">
+            <span>Vacaciones pendientes</span>
+            <strong>${euros(vacacionesEuros)}</strong>
+        </div>
+
+
+        <div class="result-row">
+            <span>Pagas extra pendientes</span>
+            <strong>${euros(pagasPendientes)}</strong>
+        </div>
+
+
+        <div class="result-row result-total">
+            <span>Total finiquito</span>
+            <strong>${euros(finiquito)}</strong>
+        </div>
+
+
+        <h3>Indemnización</h3>
+
+
+        <div class="result-row">
+            <span>Tipo seleccionado</span>
+            <strong>${escapar(
+                document.getElementById(
+                    "tipoExtincion"
+                ).selectedOptions[0].text
+            )}</strong>
+        </div>
+
+
+        <div class="result-row">
+            <span>Antigüedad</span>
+            <strong>${antiguedad} años</strong>
+        </div>
+
+
+        <div class="result-row">
+            <span>Días/año introducidos</span>
+            <strong>${diasIndemnizacion}</strong>
+        </div>
+
+
+        <div class="result-row result-total">
+            <span>Indemnización estimada</span>
+            <strong>${euros(indemnizacion)}</strong>
+        </div>
+
+
+        <details>
+
+            <summary>
+                🔎 Ver cálculo
+            </summary>
+
+            <p>
+                Salario diario utilizado:
+                <strong>${euros(salarioDiario)}</strong>
+            </p>
+
+            <p>
+                Salario pendiente:
+                ${euros(salarioDiario)}
+                × ${diasPendientes} días.
+            </p>
+
+            <p>
+                Vacaciones:
+                ${vacacionesPendientes} días
+                × ${euros(salarioDiario)}.
+            </p>
+
+            <p>
+                La indemnización utiliza el salario anual,
+                antigüedad y número de días/año que hayas introducido.
+            </p>
+
+        </details>
+
+
+        <div class="notice">
+
+            ⚠️ <strong>Importante:</strong>
+            la indemnización real no puede determinarse únicamente
+            seleccionando un tipo de despido. Deben comprobarse
+            las circunstancias concretas, fechas, antigüedad,
+            salario regulador, límites legales y convenio aplicable.
+
+        </div>
+    `;
+
+}
+
+
+/* =========================================
+   GUARDAR NÓMINA
+========================================= */
+
+function obtenerDatosNomina(){
+
+    const datos={};
+
+    document
+    .querySelectorAll(
+        "#nomina input,#nomina select"
+    )
+    .forEach(elemento=>{
+
+        datos[elemento.id]=
+            elemento.value;
+
+    });
+
+
+    return datos;
+}
+
+
+function guardarNomina(){
+
+    const datos=
+        obtenerDatosNomina();
+
+
+    localStorage.setItem(
+        "cuentaclaro_nomina",
+        JSON.stringify(datos)
+    );
+
+
+    alert(
+        "Tu cálculo se ha guardado en este dispositivo."
+    );
+
+
+    cargarGuardados();
+
+}
+
+
+function cargarGuardados(){
+
+    const contenedor=
+        document.getElementById(
+            "listaGuardados"
+        );
+
+
+    const datos=
+        localStorage.getItem(
+            "cuentaclaro_nomina"
+        );
+
+
+    if(!datos){
+
+        contenedor.innerHTML=`
+            <p class="muted">
+                Todavía no tienes cálculos guardados.
+            </p>
+        `;
+
+        return;
+
+    }
+
+
+    contenedor.innerHTML=`
+
+        <div class="card">
+
+            <h3>
+                💶 Nómina guardada
+            </h3>
+
+            <p class="muted">
+                Puedes recuperar los datos de tu último cálculo.
+            </p>
+
+            <div class="actions">
+
+                <button
+                    class="btn btn-primary"
+                    onclick="recuperarNomina()">
+
+                    Recuperar cálculo
+
+                </button>
+
+                <button
+                    class="btn btn-danger"
+                    onclick="borrarDatos()">
+
+                    Borrar
+
+                </button>
+
+            </div>
+
+        </div>
+    `;
+
+}
+
+
+function recuperarNomina(){
+
+    const datos=
+        JSON.parse(
+            localStorage.getItem(
+                "cuentaclaro_nomina"
+            )
+        );
+
+
+    Object.entries(datos)
+    .forEach(([id,valor])=>{
+
+        const elemento=
+            document.getElementById(id);
+
+        if(elemento){
+            elemento.value=valor;
+        }
+
+    });
+
+
+    document
+    .querySelector('[onclick^="mostrar(\'nomina\'"]')
+    .click();
+
+
+    calcularNomina();
+
+}
+
+
+function borrarDatos(){
+
+    if(
+        confirm(
+            "¿Quieres borrar los cálculos guardados?"
+        )
+    ){
+
+        localStorage.removeItem(
+            "cuentaclaro_nomina"
+        );
+
+        cargarGuardados();
+
+    }
+
+}
+
+
+/* =========================================
+   EXPORTAR
+========================================= */
+
+function exportarDatos(){
+
+    const datos=
+        localStorage.getItem(
+            "cuentaclaro_nomina"
+        ) || "{}";
+
+
+    const archivo=
+        new Blob(
+            [datos],
+            {
+                type:"application/json"
+            }
+        );
+
+
+    const url=
+        URL.createObjectURL(
+            archivo
+        );
+
+
+    const enlace=
+        document.createElement("a");
+
+
+    enlace.href=url;
+
+    enlace.download=
+        "cuentaclaro-mis-datos.json";
+
+
+    enlace.click();
+
+
+    URL.revokeObjectURL(url);
+
+}
+
+
+/* =========================================
+   INICIALIZACIÓN
+========================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function(){
+
+        const datos=
+            localStorage.getItem(
+                "cuentaclaro_nomina"
+            );
+
+
+        if(datos){
+
+            try{
+
+                const objeto=
+                    JSON.parse(datos);
+
+
+                Object.entries(objeto)
+                .forEach(([id,valor])=>{
+
+                    const elemento=
+                        document.getElementById(id);
+
+                    if(elemento){
+                        elemento.value=valor;
+                    }
+
+                });
+
+            }catch(e){
+
+                console.log(
+                    "No se pudieron recuperar los datos."
+                );
+
+            }
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>
